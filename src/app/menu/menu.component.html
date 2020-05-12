@@ -1,0 +1,120 @@
+<!--<div class="container"
+     fxLayout="column"
+     fxLayoutGap="10px">
+
+  <div fxFlex>
+    <div>
+      <h3>Menu</h3>
+      <hr>
+    </div>
+  </div>
+
+  <div fxFlex>
+    <mat-grid-list cols="2" rowHeight="200px" >
+      <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">  
+        <img height="200px" src={{dish.image}} alt={{dish.name}}> 
+         <mat-grid-tile-footer>
+          <h1 mat-line>{{dish.name | uppercase}}</h1>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+ Phele apne pass onclick function tha (click)="onSelect(dish)" yha p  ab baad m apn ne routerlink ka use kra hh-->
+<!-- This router link is a array that has 2 parameters  aur yeh dish.id jo hh hmari dishdetail component se aayega toh ab vha change krna padega-->
+       
+
+    <!--<app-dishdetail [dish]="selectedDish"></app-dishdetail>
+    
+  
+  
+  </div>
+</div>
+
+
+  
+   <div fxFlex *ngIf="selectedDish">
+      <mat-card>
+          <mat-card-header>
+              <mat-card-title>
+                  <h3>{{selectedDish.name | uppercase}}</h3>
+              </mat-card-title>
+              </mat-card-header>
+              <img mat-card-image src={{selectedDish.image}} alt="selectedDish.name">
+              <mat-card-content>
+                <p>{{selectedDish.description}}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                  <button mat-button>LIKE</button>
+                  <button mat-button>SHARE</button>
+              </mat-card-actions>
+          
+          
+      </mat-card>
+
+</div> -->
+
+
+
+
+<!--Here, the attribute is fxlayout and I specify column.
+I can also specify this as row,
+which means that the content will be laid out horizontally.
+Now also, one more attribute I'm going to specify for this is fxLayoutGap,
+which I will specify as 10 pixel.
+So, what this means is that whatever content I include here
+will be separated from each other by 10-pixels gap-->
+
+<!--So, if you are familiar with CSS flex layout.
+So, this is one piece of content that will be laid out by my CSS flex layout.
+So, apply fxFlex here,
+and then inside here I'm going to define mat-list-item.
+So, this is a list item here.
+So, from your HTML knowledge,
+if the LI tag that you use in HTML is similar to this here.
+So, this is an mg list item here.
+So obviously, inside this list item,
+you're going to be defining the list of things. -->
+
+<!--This is how the syntax works for the ngFor structural directive.
+So, let dish of dishes.
+What this means is that dishes is the array of dish objects.
+When we select say let dish of dishes,
+this will allow me to access each element of
+the array and then it helps me to iterate over the array.
+This is like a for loop-->
+
+
+
+
+
+<div class="container"
+fxLayout="column"
+fxLayoutGap="10px">
+
+  <div fxFlex>
+    <div>
+    <h3>Menu</h3>
+    <hr>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="dishes" [@expand]> 
+    <mat-grid-list cols="2" rowHeight="200px">
+    <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]" appHighlight>
+      <img height="200px" src="{{BaseURL + dish.image}}" alt={{dish.name}}>
+      <mat-grid-tile-footer>
+        <h1 mat-line>{{dish.name | uppercase}}</h1>
+      </mat-grid-tile-footer>
+    </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div fxFlex [hidden]="dishes || errMess">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex *ngIf="errMess">
+    <h2>Error </h2>
+    <h4>{{errMess}}</h4>
+  </div>
+
+</div>

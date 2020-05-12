@@ -1,0 +1,91 @@
+<div class="container"
+fxLayout="row"
+fxLayout.sm="column"
+fxLayout.xs="column"
+fxLayoutAlign.gt-md="space-around center"
+fxLayoutGap="10px" 
+fxLayoutGap.xs="0">
+
+  <div fxFlex *ngIf="dish" [@visibility]="visibility" [@expand]>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h3>{{dish.name | uppercase}}</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="{{BaseURL +dish.image}}" alt={{dish.name}}>
+      <mat-card-content>
+        <p>{{dish.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
+        <button mat-button (click)="goBack()">BACK</button>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+        <span class="flex-spacer"></span>
+        <button mat-button [routerLink]="['/dishdetail', next]"><span class="fa fa-chevron-right fa-lg"></span></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
+    <mat-list>
+      <mat-list-item>
+        <h2> Comments </h2>        
+      </mat-list-item>
+      <mat-list-item *ngFor="let comment of dish.comments">
+        <p mat-line>
+          <span> {{comment.comment}} </span>
+        </p>
+        <p mat-line>
+          <span> {{comment.rating}} Stars</span>
+        </p>
+        <p mat-line>
+          <span> -- {{comment.author}} {{comment.date | date}} </span>
+        </p>
+      </mat-list-item>
+      <mat-list-item *ngIf="commentForm.valid">
+        <p mat-line>
+          <span> {{comment.comment}} </span>
+        </p>
+        <p mat-line>
+          <span> {{comment.rating}} Stars</span>
+        </p>
+        <p mat-line>
+          <span> -- {{comment.author}}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+    <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field class="full-width"
+         dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+          <input matInput formControlName="author" placeholder="Name" type="text" required>
+          <mat-hint>
+            <span [hidden]="!(formErrors.author)">
+                {{formErrors.author}}</span>
+          </mat-hint>
+        </mat-form-field>            
+      </p>
+      <p>
+        <mat-slider formControlName="rating" thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>   
+      </p>
+      <p>
+        <mat-form-field class="full-width"
+         dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+          <textarea matInput formControlName="comment" placeholder="Your Comment" rows="12" required></textarea>
+          <mat-hint>
+            <span [hidden]="!(formErrors.comment)">
+                {{formErrors.comment}}</span>
+          </mat-hint>
+        </mat-form-field>
+      </p>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+    </form>
+  </div>
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+
+</div>
